@@ -67,16 +67,6 @@ button{ font-family:inherit; }
   height:100%;
 }
 
-.hex-texture{
-  position:absolute; inset:0; z-index:0; pointer-events:none;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='97' viewBox='0 0 56 97'%3E%3Cpath d='M28 0 L56 16.2 L56 48.5 L28 64.7 L0 48.5 L0 16.2 Z' fill='none' stroke='%23D4C830' stroke-opacity='0.08' stroke-width='1'/%3E%3C/svg%3E");
-  background-size:56px 97px;
-  -webkit-mask-image:linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
-  mask-image:linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
-}
-.hex-texture--dense{ background-size:36px 62px; opacity:0.7; }
-
 .hex-dot{
   display:inline-block;
   width:8px; height:8px;
