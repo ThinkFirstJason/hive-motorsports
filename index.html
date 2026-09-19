@@ -13,8 +13,8 @@
 </head>
 <body>
 
-<!-- ============ HEX GRID BACKDROP (global, decorative) ============ -->
-<div class="hex-parallax" aria-hidden="true"></div>
+<!-- ============ HEX GRID BACKDROP (global, decorative, cursor-reactive) ============ -->
+<canvas id="hexCanvas" aria-hidden="true"></canvas>
 
 <!-- ============ NAV ============ -->
 <header class="site-nav" id="siteNav">
@@ -44,13 +44,11 @@
 <!-- ============ HERO ============ -->
 <section class="hero" id="hero">
   <div class="hero-media">
-    <div class="ph-block hero-photo" data-ph="Hero race car / lifestyle image — 16:9, full-bleed"></div>
+    <img src="assets/img/hero-mclaren-action.jpg" alt="Hive Motorsports McLaren GT car on track" class="hero-photo">
     <div class="hero-overlay"></div>
   </div>
 
-  <div class="hero-cut" aria-hidden="true"></div>
-
-  <div class="hero-content reveal">
+  <div class="hero-content">
     <p class="eyebrow"><span class="hex-dot"></span> CAR CULTURE &middot; MOTORSPORTS &middot; SIM RACING</p>
     <h1 class="hero-wordmark">
       <span class="line">HIVE</span>
@@ -76,13 +74,15 @@
       <p class="lead">Hive Motorsports was built on the track and in the garage &mdash; by drivers, wrenches, and sim racers who believe speed is a team sport. A hive doesn't work alone. Every driver, every crew member, every fan in the stands is a cell in the same structure &mdash; small on their own, relentless together.</p>
       <p class="body-copy">We race what we build and wear what we race in. No corporate polish, no pretending &mdash; just the grind of car culture, the discipline of motorsport, and a community that shows up every single weekend, virtual or asphalt.</p>
       <div class="stat-row">
-        <div class="stat"><span class="stat-num">3</span><span class="stat-label">Race Programs</span></div>
-        <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Community Built</span></div>
+        <div class="stat"><span class="stat-num" data-count-to="3">0</span><span class="stat-label">Race Programs</span></div>
+        <div class="stat"><span class="stat-num" data-count-to="100" data-suffix="%">0%</span><span class="stat-label">Community Built</span></div>
         <div class="stat"><span class="stat-num">24/7</span><span class="stat-label">Buzz</span></div>
       </div>
     </div>
     <div class="about-media reveal">
-      <div class="ph-block ph-tall" data-ph="Lifestyle / garage photo — 4:5"></div>
+      <div class="media ph-tall">
+        <img src="assets/img/about-porsche-studio.jpg" alt="Hive Motorsports Porsche LMDh prototype">
+      </div>
       <div class="hex-badge">
         <img src="assets/img/hive-logo.png" alt="">
       </div>
@@ -101,7 +101,9 @@
 
     <div class="race-gallery">
       <article class="race-card reveal">
-        <div class="ph-block ph-16-9" data-ph="F4 open-wheel car — livery shot"></div>
+        <div class="media ph-16-9">
+          <img src="assets/img/race-f4.jpg" alt="Hive Motorsports F4 open-wheel car">
+        </div>
         <div class="race-card-body">
           <span class="race-tag">OPEN WHEEL</span>
           <h3>F4 PROGRAM</h3>
@@ -109,7 +111,9 @@
         </div>
       </article>
       <article class="race-card reveal">
-        <div class="ph-block ph-16-9" data-ph="NASCAR-style truck — livery shot"></div>
+        <div class="media ph-16-9">
+          <img src="assets/img/race-truck.jpg" alt="Hive Motorsports Craftsman Truck Series truck">
+        </div>
         <div class="race-card-body">
           <span class="race-tag">TRUCK SERIES</span>
           <h3>SHORT TRACK TRUCKS</h3>
@@ -117,7 +121,9 @@
         </div>
       </article>
       <article class="race-card reveal">
-        <div class="ph-block ph-16-9" data-ph="Road racing car — livery shot"></div>
+        <div class="media ph-16-9">
+          <img src="assets/img/race-road.jpg" alt="Hive Motorsports GT3 Corvette road racing livery">
+        </div>
         <div class="race-card-body">
           <span class="race-tag">ROAD RACING</span>
           <h3>ROAD COURSE</h3>
@@ -138,12 +144,19 @@
 
     <div class="sponsor-strip reveal">
       <p class="sponsor-label">RUNNING WITH</p>
-      <div class="sponsor-logos">
-        <span class="sponsor-badge">LOGITECH G</span>
-        <span class="sponsor-badge">GOODYEAR</span>
-        <span class="sponsor-badge">SPONSOR</span>
-        <span class="sponsor-badge">SPONSOR</span>
-        <span class="sponsor-badge">SPONSOR</span>
+      <div class="sponsor-marquee">
+        <div class="sponsor-logos">
+          <span class="sponsor-badge">LOGITECH G</span>
+          <span class="sponsor-badge">GOODYEAR</span>
+          <span class="sponsor-badge">SPONSOR</span>
+          <span class="sponsor-badge">SPONSOR</span>
+          <span class="sponsor-badge">SPONSOR</span>
+          <span class="sponsor-badge" aria-hidden="true">LOGITECH G</span>
+          <span class="sponsor-badge" aria-hidden="true">GOODYEAR</span>
+          <span class="sponsor-badge" aria-hidden="true">SPONSOR</span>
+          <span class="sponsor-badge" aria-hidden="true">SPONSOR</span>
+          <span class="sponsor-badge" aria-hidden="true">SPONSOR</span>
+        </div>
       </div>
     </div>
   </div>
@@ -215,12 +228,12 @@
     </div>
 
     <div class="social-feed">
-      <div class="ph-block ph-1-1 reveal" data-ph="IG/TikTok clip"></div>
-      <div class="ph-block ph-1-1 reveal" data-ph="IG/TikTok clip"></div>
-      <div class="ph-block ph-1-1 reveal" data-ph="IG/TikTok clip"></div>
-      <div class="ph-block ph-1-1 reveal" data-ph="IG/TikTok clip"></div>
-      <div class="ph-block ph-1-1 reveal" data-ph="IG/TikTok clip"></div>
-      <div class="ph-block ph-1-1 reveal" data-ph="IG/TikTok clip"></div>
+      <div class="media ph-1-1 reveal"><img src="assets/img/social-1.jpg" alt="Corvette GT3 on track at Le Mans"></div>
+      <div class="media ph-1-1 reveal"><img src="assets/img/social-2.jpg" alt="Arizona Iced Tea liveried McLarens racing"></div>
+      <div class="media ph-1-1 reveal"><img src="assets/img/social-3.jpg" alt="Arizona Iced Tea McLaren on track"></div>
+      <div class="media ph-1-1 reveal"><img src="assets/img/social-4.jpg" alt="Hive Motorsports NASCAR Xfinity car"></div>
+      <div class="media ph-1-1 reveal"><img src="assets/img/social-5.jpg" alt="Hive Motorsports Ford Mustang NASCAR car"></div>
+      <div class="media ph-1-1 reveal"><img src="assets/img/social-6.jpg" alt="Hive Motorsports Craftsman Truck"></div>
     </div>
 
     <div class="social-links reveal center">

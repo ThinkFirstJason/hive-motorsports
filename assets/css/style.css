@@ -2,12 +2,12 @@
    HIVE MOTORSPORTS — Design tokens
    ========================================================================== */
 :root{
-  --black-950: #050505;
-  --black-900: #0a0a0a;
-  --black-800: #151515;
-  --black-700: #1e1e1e;
-  --black-600: #2a2a2a;
-  --line: #2e2e2e;
+  --black-950: #151412;
+  --black-900: #1c1a17;
+  --black-800: #272420;
+  --black-700: #34302a;
+  --black-600: #423d35;
+  --line: #4a453c;
 
   --yellow: #D4C830;
   --yellow-bright: #E8D93A;
@@ -15,7 +15,7 @@
 
   --white: #F5F5F3;
   --silver: #B8B8B4;
-  --silver-dim: #7c7c78;
+  --silver-dim: #8c8a80;
 
   --font-head: 'Oswald', 'Arial Narrow', sans-serif;
   --font-body: 'Barlow', 'Helvetica Neue', sans-serif;
@@ -58,16 +58,13 @@ button{ font-family:inherit; }
 /* ==========================================================================
    Global hex backdrop + textures
    ========================================================================== */
-.hex-parallax{
+#hexCanvas{
   position:fixed;
   inset:0;
   z-index:0;
   pointer-events:none;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='97' viewBox='0 0 56 97'%3E%3Cpath d='M28 0 L56 16.2 L56 48.5 L28 64.7 L0 48.5 L0 16.2 Z' fill='none' stroke='%23D4C830' stroke-opacity='0.05' stroke-width='1'/%3E%3C/svg%3E");
-  background-size:56px 97px;
-  opacity:0.5;
-  will-change:transform;
+  width:100%;
+  height:100%;
 }
 
 .hex-texture{
@@ -172,6 +169,29 @@ button{ font-family:inherit; }
 .ph-tall{ aspect-ratio:4/5; }
 .ph-driver{ aspect-ratio:3/4; }
 
+/* Real photo frames (same treatment as placeholders: border, dark gradient, aspect-ratio) */
+.media{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:var(--black-800);
+}
+.media img{
+  width:100%; height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform 0.7s var(--ease);
+}
+.media::after{
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.55) 100%);
+  pointer-events:none;
+}
+.media:hover img{ transform:scale(1.06); }
+.race-card .media:hover img,
+.product-card .media:hover img{ transform:scale(1.08); }
+
 /* ==========================================================================
    NAV
    ========================================================================== */
@@ -182,7 +202,7 @@ button{ font-family:inherit; }
   transition:background 0.3s var(--ease), border-color 0.3s var(--ease);
 }
 .site-nav.scrolled{
-  background:rgba(10,10,10,0.92);
+  background:rgba(21,20,18,0.92);
   backdrop-filter:blur(10px);
   border-bottom-color:var(--line);
 }
@@ -250,19 +270,30 @@ button{ font-family:inherit; }
   overflow:hidden;
 }
 .hero-media{ position:absolute; inset:0; z-index:0; }
-.hero-photo{ position:absolute; inset:0; border:none; }
+.hero-photo{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:85% 38%; }
 .hero-overlay{
   position:absolute; inset:0;
   background:
-    linear-gradient(180deg, rgba(5,5,5,0.55) 0%, rgba(5,5,5,0.75) 55%, rgba(5,5,5,0.96) 100%);
-}
-.hero-cut{
-  position:absolute; top:0; right:-10%; width:55%; height:100%;
-  background:linear-gradient(100deg, transparent 0%, transparent 38%, rgba(212,200,48,0.9) 38.4%, rgba(212,200,48,0.9) 40%, transparent 40.4%);
-  z-index:1; pointer-events:none;
-  opacity:0.85;
+    linear-gradient(100deg, rgba(21,20,18,0.97) 0%, rgba(21,20,18,0.9) 32%, rgba(21,20,18,0.55) 54%, rgba(21,20,18,0.3) 74%, rgba(21,20,18,0.42) 100%),
+    linear-gradient(180deg, rgba(21,20,18,0.3) 0%, rgba(21,20,18,0.5) 55%, rgba(21,20,18,0.92) 100%);
 }
 .hero-content{ position:relative; z-index:2; max-width:900px; }
+
+@keyframes heroRise{
+  from{ opacity:0; transform:translateY(28px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+.hero-content .eyebrow{ animation:heroRise 0.8s var(--ease) 0.1s both; }
+.hero-content .hero-wordmark .line:nth-child(1){ animation:heroRise 0.8s var(--ease) 0.22s both; }
+.hero-content .hero-wordmark .line:nth-child(2){ animation:heroRise 0.8s var(--ease) 0.34s both; }
+.hero-content .hero-tagline{ animation:heroRise 0.8s var(--ease) 0.46s both; }
+.hero-content .hero-actions{ animation:heroRise 0.8s var(--ease) 0.58s both; }
+@media (prefers-reduced-motion: reduce){
+  .hero-content .eyebrow, .hero-content .hero-wordmark .line, .hero-content .hero-tagline, .hero-content .hero-actions{
+    animation:none;
+  }
+}
+
 .eyebrow{
   display:flex; align-items:center;
   font-family:var(--font-cond); font-weight:600; letter-spacing:0.16em; font-size:0.82rem;
@@ -274,9 +305,14 @@ button{ font-family:inherit; }
   font-weight:700;
   font-style:italic;
   transform:skewX(-3deg);
+  text-shadow:0 4px 28px rgba(0,0,0,0.55);
 }
 .hero-wordmark .line{ display:block; }
-.hero-wordmark .accent-line{ color:var(--yellow); -webkit-text-stroke:0; }
+.hero-wordmark .accent-line{
+  color:var(--yellow);
+  -webkit-text-stroke:0;
+  text-shadow:0 2px 4px rgba(0,0,0,0.5), 0 4px 32px rgba(0,0,0,0.6);
+}
 .hero-tagline{
   font-family:var(--font-cond);
   font-size:clamp(1.1rem, 2vw, 1.5rem);
@@ -308,7 +344,7 @@ button{ font-family:inherit; }
 }
 .stat-row{ display:flex; gap:40px; margin-top:36px; flex-wrap:wrap; }
 .stat{ display:flex; flex-direction:column; }
-.stat-num{ font-family:var(--font-head); font-size:2.2rem; font-weight:700; color:var(--yellow); line-height:1; }
+.stat-num{ font-family:var(--font-head); font-size:2.2rem; font-weight:700; color:var(--yellow); line-height:1; font-variant-numeric:tabular-nums; }
 .stat-label{ font-family:var(--font-cond); font-size:0.78rem; letter-spacing:0.08em; color:var(--silver); text-transform:uppercase; margin-top:6px; }
 
 .about-media{ position:relative; }
@@ -320,8 +356,14 @@ button{ font-family:inherit; }
   clip-path:polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   display:flex; align-items:center; justify-content:center;
   padding:20px;
+  animation:badgePulse 3.2s ease-in-out infinite;
 }
 .hex-badge img{ width:70%; }
+@keyframes badgePulse{
+  0%,100%{ box-shadow:0 0 0 0 rgba(212,200,48,0.28); }
+  50%{ box-shadow:0 0 0 14px rgba(212,200,48,0); }
+}
+@media (prefers-reduced-motion: reduce){ .hex-badge{ animation:none; } }
 
 /* ==========================================================================
    RACING
@@ -354,10 +396,26 @@ button{ font-family:inherit; }
 
 .sponsor-strip{ text-align:center; padding-top:32px; border-top:1px solid var(--line); }
 .sponsor-label{ font-family:var(--font-cond); letter-spacing:0.18em; font-size:0.75rem; color:var(--silver-dim); margin-bottom:24px; }
-.sponsor-logos{ display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+
+.sponsor-marquee{
+  overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+  mask-image:linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+.sponsor-logos{
+  display:flex; align-items:center; gap:20px; width:max-content;
+  animation:marquee 22s linear infinite;
+}
+.sponsor-marquee:hover .sponsor-logos{ animation-play-state:paused; }
+@keyframes marquee{
+  from{ transform:translateX(0); }
+  to{ transform:translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce){ .sponsor-logos{ animation:none; flex-wrap:wrap; justify-content:center; } }
 .sponsor-badge{
   font-family:var(--font-cond); font-weight:700; letter-spacing:0.08em; font-size:0.85rem;
   color:var(--silver); border:1px solid var(--line); padding:14px 26px;
+  white-space:nowrap;
   transition:color 0.2s, border-color 0.2s;
 }
 .sponsor-badge:hover{ color:var(--yellow); border-color:var(--yellow); }
@@ -470,7 +528,7 @@ button{ font-family:inherit; }
 @media (max-width: 760px){
   .nav-links{
     position:fixed; top:64px; left:0; right:0; bottom:0;
-    background:rgba(10,10,10,0.98); backdrop-filter:blur(10px);
+    background:rgba(21,20,18,0.98); backdrop-filter:blur(10px);
     flex-direction:column; align-items:flex-start; justify-content:flex-start;
     padding:32px 6vw; gap:8px;
     transform:translateX(100%); transition:transform 0.35s var(--ease);
@@ -482,7 +540,6 @@ button{ font-family:inherit; }
   .nav-wordmark{ display:none; }
 
   .hero{ padding-top:100px; align-items:flex-start; }
-  .hero-cut{ display:none; }
   .hero-wordmark{ font-size:clamp(2.4rem, 14vw, 4rem); }
 
   .about-grid{ gap:32px; }
